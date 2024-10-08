@@ -56,7 +56,7 @@ class AuthService
             'phone_number' => $request->phone_number,
         ]);
 
-        $linkToken = $this->userTokenRepository->create($this->tokenService->generateToken());
+        $linkToken = $this->userTokenRepository->create($this->tokenService->generateToken(), $user);
 
         return [
             'status' => true,

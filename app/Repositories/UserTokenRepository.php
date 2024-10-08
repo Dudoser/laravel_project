@@ -3,17 +3,18 @@
 namespace App\Repositories;
 
 use App\Models\UserToken;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class UserTokenRepository
 {
     private $tokenValidityDay = 7;
 
-    public function create(string $token): UserToken
+    public function create(string $token, $user = null): UserToken
     {
+        $user = $user ?? Auth::user();
+
         return UserToken::updateOrCreate(
-            ['user_id' => Auth::user()->id],
+            ['user_id' => $user->id],
             [
                 'token' => $token,
                 'expires_at' => now()->addDays($this->tokenValidityDay),
